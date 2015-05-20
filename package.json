@@ -1,0 +1,37 @@
+{
+  "name": "expedient",
+  "version": "0.0.0",
+  "description": "Expedient APIs without boilerplate and fuss",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm run lint && tape test/*.js",
+    "lint": "eslint src test",
+    "coverage": "istanbul cover tape test/*.js",
+    "report-coverage": "istanbul cover --report lcovonly tape test/*.js && coveralls < coverage/lcov.info"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:denis-sokolov/expedient"
+  },
+  "keywords": [
+    "api",
+    "regex",
+    "exec"
+  ],
+  "author": {
+    "name": "Denis Sokolov",
+    "email": "denis@sokolov.cc",
+    "url": "http://sokolov.cc/"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/denis-sokolov/expedient/issues"
+  },
+  "homepage": "https://github.com/denis-sokolov/expedient",
+  "devDependencies": {
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.14",
+    "tap-colorize": "^1.2.0",
+    "tape": "^4.0.0"
+  }
+}
