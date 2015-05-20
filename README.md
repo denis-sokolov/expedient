@@ -1,5 +1,10 @@
 # Expedient APIs for JavaScript
 
+[![Build Status](https://travis-ci.org/denis-sokolov/expedient.svg?branch=master)](https://travis-ci.org/denis-sokolov/expedient)
+[![Code Climate](http://img.shields.io/codeclimate/github/denis-sokolov/expedient.svg)](https://codeclimate.com/github/denis-sokolov/expedient)
+[![bitHound Score](https://app.bithound.io/denis-sokolov/remote-dotfiles/badges/score.svg)](http://app.bithound.io/denis-sokolov/remote-dotfiles)
+[![Dependency Status](https://gemnasium.com/denis-sokolov/expedient.svg)](https://gemnasium.com/denis-sokolov/expedient)
+
 An experiment in figuring out how popular APIs, such as regular expressions, `exec`, and others can be made more convenient, allowing to fulfill main use cases without much boilerplate and thinking about the argument order.
 
 ## Regular expressions
