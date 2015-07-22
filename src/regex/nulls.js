@@ -14,7 +14,12 @@ var api = function(rx, options, input){
     throw new Error('First argument must be a string or a RegExp object');
   if (typeof input !== 'string')
     throw new Error('Data argument must be a string');
-  return !!rx.exec(input);
+  var match = rx.exec(input);
+  if (!match)
+    return false;
+  if (match.length === 2)
+    return match[1];
+  return true;
 };
 
 module.exports = api;

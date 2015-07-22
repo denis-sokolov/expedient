@@ -17,10 +17,10 @@ var regex = require('expedient').regex.throws;
 // Returns nulls if not matched
 var regexNulls = require('expedient').regex.nulls;
 
-// Validation returns boolean
+// One special case for simple validation, that returns a boolean.
 // This never throws nor returns null.
-regex('[a-z]+', 'foo'); // true
-regex('[a-z]+', 'NOPE'); //false
+regex.passes('[a-z]+', 'foo'); // true
+regex.passes('[a-z]+', 'NOPE'); //false
 
 // All regex calls can take RegExp as the first argument
 regex(/[a-z]+/, 'foo'); // true

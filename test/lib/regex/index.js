@@ -24,52 +24,97 @@ var allFour = function(rx, cb){
   });
 };
 
-var all = function(rx, options, data, cb){
-  allFour(rx, function(fType, rType, f, r){
-    if (!options)
-      cb([fType, rType], function(){ return f(r, data); });
-    cb([fType, rType, 'options'], function(){ return f(r, options || {}, data); });
-    if (!options)
-      cb([fType, rType, 'bind'], function(){ return f(r)(data); });
-    cb([fType, rType, 'options', 'bind'], function(){ return f(r, options || {})(data); });
+/**
+ * Perform an action with possible permutations of function call types
+ * all({
+ *   rx: 'regex',
+ *   rxOptions: {},
+ *   data: 'value to match on'
+ * }, function(params, run){
+ * });
+ */
+var all = function(opts, cb){
+  allFour(opts.rx, function(fType, rType, f, r){
+    if (!opts.rxOptions)
+      cb([fType, rType], function(){ return f(r, opts.data); });
+    cb([fType, rType, 'options'], function(){ return f(r, opts.rxOptions || {}, opts.data); });
+    if (!opts.rxOptions)
+      cb([fType, rType, 'bind'], function(){ return f(r)(opts.data); });
+    cb([fType, rType, 'options', 'bind'], function(){ return f(r, opts.rxOptions || {})(opts.data); });
   });
 };
 
 // options can be skipped
-var api = function(name, rx, options, data, cb){
+var api = function(name, rx, data, opts, cb){
   if (!cb) {
-    cb = data;
-    data = options;
-    options = null;
+    cb = opts;
+    opts = {};
   }
-  all(rx, options, data, function(params, run){
+  all(rx, opts.rxOptions, data, function(params, run){
     test(name + ' (' + params.join(', ') + ')', function(t){
       cb(t, run);
     });
   });
 };
 
-api.equal = function(name, rx, options, data, result){
-  if (!result) {
-    result = data;
-    data = options;
-    options = null;
-  }
-  api(name, rx, options, data, function(t, run){
+api.regex.passes = function(name, rx, data, result){
+  api(name, rx, data, function(t, run){
     t.strictEqual(run(), result);
     t.end();
   });
 };
 
-api.throws = function(name, rx, options, data, what){
+api.equal = function(name, rx, rxOptions, data, result){
+  if (!result) {
+    result = data;
+    data = rxOptions;
+    rxOptions = null;
+  }
+  api(name, rx, data, { rxOptions: rxOptions }, function(t, run){
+    t.strictEqual(run(), result);
+    t.end();
+  });
+};
+
+api.throws = function(name, rx, rxOptions, data, what){
   if (!what) {
     what = data;
+    data = rxOptions;
+    rxOptions = null;
+  }
+  api(name, rx, data, { rxOptions: rxOptions }, function(t, run){
+    t.throws(run, what);
+    t.end();
+  });
+};
+
+api.onlyNulls = function(name, rx, rxOptions, data, cb){
+  if (!cb) {
+    cb = data;
+    data = rxOptions;
+    rxOptions = null;
+  }
+  all(rx, data, { rxOptions: rxOptions }, function(params, run){
+    if (params.indexOf('nulls') === -1)
+      return;
+    test(name + ' (' + params.join(', ') + ')', function(t){
+      cb(t, run);
+    });
+  });
+};
+
+api.onlyThrows = function(name, rx, options, data, cb){
+  if (!cb) {
+    cb = data;
     data = options;
     options = null;
   }
-  api(name, rx, options, data, function(t, run){
-    t.throws(run, what);
-    t.end();
+  all(rx, options, data, function(params, run){
+    if (params.indexOf('nulls') === -1)
+      return;
+    test(name + ' (' + params.join(', ') + ')', function(t){
+      cb(t, run);
+    });
   });
 };
 
