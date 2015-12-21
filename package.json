@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/denis-sokolov/expedient",
   "devDependencies": {
-    "eslint": "^0.21.2",
+    "eslint": "^1.10.3",
+    "eslint-config-useclark": "^2.0.0",
     "tap-colorize": "^1.2.0",
     "tape": "^4.0.0"
   }
