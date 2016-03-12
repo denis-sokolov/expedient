@@ -34,6 +34,7 @@ var allFour = function(rx, cb){
  * });
  */
 var all = function(opts, cb){
+  if (!cb) throw new Error('cb is supposed to be a function')
   allFour(opts.rx, function(fType, rType, f, r){
     if (!opts.rxOptions)
       cb([fType, rType], function(){ return f(r, opts.data); });
@@ -50,7 +51,8 @@ var api = function(name, rx, data, opts, cb){
     cb = opts;
     opts = {};
   }
-  all(rx, opts.rxOptions, data, function(params, run){
+  if (!cb) throw new Error('cb is supposed to be a function')
+  all({ rx: rx, rxOptions: opts.rxOptions, data: data }, function(params, run){
     test(name + ' (' + params.join(', ') + ')', function(t){
       cb(t, run);
     });
