@@ -17,11 +17,6 @@ var regex = require('expedient').regex.throws;
 // Returns nulls if not matched
 var regexNulls = require('expedient').regex.nulls;
 
-// One special case for simple validation, that returns a boolean.
-// This never throws nor returns null.
-regex.passes('[a-z]+', 'foo'); // true
-regex.passes('[a-z]+', 'NOPE'); //false
-
 // All regex calls can take RegExp as the first argument
 regex(/[a-z]+/, 'foo'); // true
 // All regex calls can bind transparently
@@ -103,7 +98,7 @@ try {
   regexp('', '');
 } catch (e) {
   if (!e.nomatch) throw e;
-  
+
   // Input data that has been passed and did not match
   e.input;
   // Source of the original regular expression
@@ -184,13 +179,3 @@ var domains = regex.all('([^ ]+).example.([^ .]+)', ['name', 'domain'] 'foo.exam
 // Return value is always string
 regex.replace('[0-9]', 'X', 'foo123 bar'); // 'fooXXX bar'
 ```
-
-
-
-
-
-
-
-
-
-

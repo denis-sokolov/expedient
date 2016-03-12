@@ -3,10 +3,10 @@
 var lib = require('./lib');
 
 ['f', 'foo', '  1234foo '].forEach(function(d){
-  lib.regex.passes('simple validation (' + d + ')', '[a-z]', d, true);
+  lib.regex('simple validation (' + d + ')', '[a-z]', d, true);
 });
 ['', '123', 'TEST'].forEach(function(f){
-  lib.regex.passes('simple validation (' + f + ')', '[a-z]', f, false);
+  lib.regex('simple validation (' + f + ')', '[a-z]', f, false);
 });
 
 ['f=f', 'foo=f', '  1234foo =f'].forEach(function(d){

@@ -57,13 +57,6 @@ var api = function(name, rx, data, opts, cb){
   });
 };
 
-api.regex.passes = function(name, rx, data, result){
-  api(name, rx, data, function(t, run){
-    t.strictEqual(run(), result);
-    t.end();
-  });
-};
-
 api.equal = function(name, rx, rxOptions, data, result){
   if (!result) {
     result = data;
